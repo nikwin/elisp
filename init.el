@@ -290,6 +290,7 @@ end tell")
   )
 
 (add-hook 'objc-mode-hook (lambda () (local-set-key (kbd "M-r") 'run-xcode)))
+(add-hook 'objc-mode-hook (lambda () (local-set-key (kbd "C-c C-c") 'run-xcode)))
 
 ;; ======= ObjC-specific stuff =======
 
@@ -406,9 +407,9 @@ end tell")
 (setq dabbrev-case-fold-search nil)
 (setq dabbrev-case-replace nil)
 
-;; ======= hog specific code =======
+;; ======= toe specific code =======
 
-;(setq tags-file-name "~/Desktop/hidden/")
+(setq tags-file-name "~/Desktop/enginestarterapp/")
 
 ;; ======= Dash =======
 
