@@ -5,36 +5,6 @@
 
 (add-to-list 'load-path "/Applications/emacs_lisp/")
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(filesets-data (quote (("hiddenCsv" (:pattern "~/Desktop/hidden/Resources/Parameters/" "^[a-zA-Z]+\\.csv$") (:tree-max-level 3)))))
- '(hg-binary "hg")
- '(ido-default-buffer-method (quote selected-window))
- '(ido-default-file-method (quote selected-window))
- '(ido-mode (quote both) nil (ido))
- '(ido-rotate-file-list-default t)
- '(indent-tabs-mode t)
- '(inhibit-startup-screen t)
- '(initial-scratch-message nil)
- '(org-agenda-files (quote ("~/Dropbox/Nikhil/orgfiles/taskList.org" "~/Desktop/nexus/tasks.org")))
- '(org-agenda-start-on-weekday nil)
- '(org-remember-templates (quote (("Personal Life" 108 "** TODO %?
-   %u" "~/Dropbox/Nikhil/orgfiles/taskList.org" "Personal Life:" nil) ("Personal Work" 119 "** TODO %?
-   %u" "~/Dropbox/Nikhil/orgfiles/taskList.org" "Personal Work:" nil) ("Pocket Gems Work" 112 "** TODO %?
-   %u" "~/Dropbox/Nikhil/orgfiles/taskList.org" "Pocket Gems Work:" nil) ("Notes" 110 "** %?
-   %u" "~/Dropbox/Nikhil/orgfiles/taskList.org" "Notes" nil))))
- '(py-python-command-args nil)
- '(standard-indent 4))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-
 ;; ======= Indentation =======
 
 (setq-default indent-tabs-mode nil)
@@ -341,38 +311,6 @@ end tell")
 (setq emerge-combine-versions-template "%a%b")
 (setq emerge-diff-options "--ignore-all-space")
 
-;; ======= E-mail =======
-
-(defun djcb-term-start-or-switch (prg &optional use-existing)
-  "* run program PRG in a terminal buffer. If USE-EXISTING is non-nil "
-  " and PRG is already running, switch to that buffer instead of starting"
-  " a new instance."
-  (interactive)
-  (let ((bufname (concat "*" prg "*")))
-    (when (not (and use-existing
-                 (let ((buf (get-buffer bufname)))
-                   (and buf (buffer-name (switch-to-buffer bufname))))))
-      (ansi-term prg prg))))
-
-(defun mutt ()
-  (interactive)
-  (djcb-term-start-or-switch "/opt/local/bin/mutt" t))
-
-(server-start)
-
-(autoload 'post-mode "post" "mode for e-mail" t)
-(add-to-list 'auto-mode-alist 
-             '("\\.*mutt-*\\|.article\\|\\.followup" 
-                . post-mode))
-
-(add-hook 'post-mode-hook 
-  (lambda()
-    (auto-fill-mode t)    
-    (setq fill-column 72)    ; rfc 1855 for usenet messages
-    (require 'footnote-mode) 
-    (footmode-mode t)
-    (require 'boxquote)))
-
 ;; ======= Personal Key Bindings =======
 
 (setq mac-command-modifier 'meta)
@@ -384,6 +322,9 @@ end tell")
 (global-set-key (kbd "<f6>") 'linum-mode)
 (global-set-key (kbd "C-c o") 'occur)
 (global-set-key (kbd "C-o") 'other-frame)
+
+(global-set-key (kbd "C-x v s") 'egg-status)
+(global-set-key (kbd "C-x v l") 'egg-log)
 
 (defun uniquify-region-lines (beg end)
     "Remove duplicate adjacent lines in region."
@@ -446,15 +387,19 @@ end tell")
 
 ;; ======= JS flymake =======
 
-(require 'flycheck)
-(flycheck-define-checker javascript-jslint-reporter
-  "A JavaScript syntax and style checker based on JSLint Reporter.
+;; (require 'flycheck)
+;; (flycheck-define-checker javascript-jslint-reporter
+;;   "A JavaScript syntax and style checker based on JSLint Reporter.
 
-See URL `https://github.com/FND/jslint-reporter'."
-  :command ("~/.emacs.d/jslint-reporter/jslint-reporter" source "--jshint")
-  :error-patterns
-  ((error line-start (1+ nonl) ":" line ":" column ":" (message) line-end))
-  :modes (js-mode js2-mode js3-mode))
-(add-hook 'js-mode-hook (lambda ()
-                          (flycheck-select-checker 'javascript-jslint-reporter)
-                          (flycheck-mode)))
+;; See URL `https://github.com/FND/jslint-reporter'."
+;;   :command ("~/.emacs.d/jslint-reporter/jslint-reporter" source "--jshint")
+;;   :error-patterns
+;;   ((error line-start (1+ nonl) ":" line ":" column ":" (message) line-end))
+;;   :modes (js-mode js2-mode js3-mode))
+;; (add-hook 'js-mode-hook (lambda ()
+;;                           (flycheck-select-checker 'javascript-jslint-reporter)
+;;                           (flycheck-mode)))
+
+;; ======= Eshell customization =======
+
+;; (setq eshell-path-env (concat "/usr/local/bin" ":" eshell-path-env))
