@@ -1,4 +1,4 @@
-; ======= Basic initializations =======
+;; ======= Basic initializations =======
 
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
@@ -316,7 +316,7 @@ end tell")
 (setq mac-command-modifier 'meta)
 
 (fset 'split-only-current-buffer "\C-x1\C-x3")
-(global-set-key "\C-x#" 'split-only-current-buffer)
+(global-set-key "\C-x!" 'split-only-current-buffer)
 (global-set-key "\C-a" 'back-to-indentation)
 (global-set-key "\M-m" 'move-beginning-of-line)
 (global-set-key (kbd "<f6>") 'linum-mode)
@@ -325,6 +325,8 @@ end tell")
 
 (global-set-key (kbd "C-x v s") 'egg-status)
 (global-set-key (kbd "C-x v l") 'egg-log)
+
+(global-set-key (kbd "C-x C-f") 'icicle-find-file)
 
 (defun uniquify-region-lines (beg end)
     "Remove duplicate adjacent lines in region."
@@ -350,7 +352,13 @@ end tell")
 
 ;; ======= toe specific code =======
 
-(setq tags-file-name "~/Desktop/enginestarterapp/")
+(setq tags-file-name "~/Desktop/tow/")
+
+(defun tgrep ()
+  (interactive)
+  (let* ((regexp (grep-read-regexp)))
+    (rgrep regexp "*.[mh]" "~/Desktop/tow/"))
+ )
 
 ;; ======= Dash =======
 
@@ -387,19 +395,18 @@ end tell")
 
 ;; ======= JS flymake =======
 
-;; (require 'flycheck)
-;; (flycheck-define-checker javascript-jslint-reporter
-;;   "A JavaScript syntax and style checker based on JSLint Reporter.
-
-;; See URL `https://github.com/FND/jslint-reporter'."
-;;   :command ("~/.emacs.d/jslint-reporter/jslint-reporter" source "--jshint")
-;;   :error-patterns
-;;   ((error line-start (1+ nonl) ":" line ":" column ":" (message) line-end))
-;;   :modes (js-mode js2-mode js3-mode))
-;; (add-hook 'js-mode-hook (lambda ()
-;;                           (flycheck-select-checker 'javascript-jslint-reporter)
-;;                           (flycheck-mode)))
 
 ;; ======= Eshell customization =======
 
 ;; (setq eshell-path-env (concat "/usr/local/bin" ":" eshell-path-env))
+
+
+;; ======= LUA Mode =======
+
+(autoload 'lua-mode "lua-mode" "Lua editing mode." t)
+(add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
+(add-to-list 'interpreter-mode-alist '("lua" . lua-mode))
+
+;; ------- Emacs client support =======
+
+(server-start)
