@@ -210,6 +210,8 @@ When optional fourth argument is non-nil, treat the from as a regular expression
 
 ;(icy-mode 1)
 
+;(global-set-key (kbd "C-x C-f") 'icicle-find-file)
+
 ;; ======= Electric Pairs =======
 
 (electric-pair-mode 1)
@@ -251,8 +253,6 @@ When optional fourth argument is non-nil, treat the from as a regular expression
 
 (global-set-key (kbd "C-x v s") 'egg-status)
 (global-set-key (kbd "C-x v l") 'egg-log)
-
-(global-set-key (kbd "C-x C-f") 'icicle-find-file)
 
 (defun uniquify-region-lines (beg end)
     "Remove duplicate adjacent lines in region."
@@ -326,3 +326,8 @@ end tell")
 ;; ------- Emacs client support =======
 
 (server-start)
+
+;; ======= VC support =======
+
+(add-to-list 'load-path "~/elisp/egg")
+(require 'egg)
