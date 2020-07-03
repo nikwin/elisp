@@ -5,6 +5,9 @@
 
 (add-to-list 'load-path "~/elisp")
 
+(setq split-height-threshold nil)
+(setq split-width-threshold 160)
+
 ;; ======= Indentation =======
 
 (setq-default indent-tabs-mode nil)
@@ -95,11 +98,22 @@
 (add-hook 'emacs-lisp-mode-hook 'pretty-greek)
 (add-hook 'python-mode-hook 'pretty-greek)
 
+;; ======= Synosaurus -------
+
+(add-to-list 'load-path "~/elisp/synosaurus")
+(require 'synosaurus)
+(require 'synosaurus-wordnet)
+
+
 ;; ======= CSV Mode =======
 
 (add-to-list 'auto-mode-alist '("\\.[Cc][Ss][Vv]\\'" . csv-mode))
+(add-to-list 'auto-mode-alist '("\\.bcsv$" . csv-mode))
+(add-to-list 'auto-mode-alist '("\\.gen_csv$" . csv-mode))
+(add-to-list 'auto-mode-alist '("\\.archive_csv$" . csv-mode))
 (autoload 'csv-mode "csv-mode"
   "Major mode for editing comma-separated value files." t)
+(add-hook 'csv-mode-hook (lambda () (synosaurus-mode)))
 
 ;; ======= Uniquify =======
 
@@ -226,7 +240,7 @@ When optional fourth argument is non-nil, treat the from as a regular expression
   (recentf-open-files)
   (split-window-right)
   (other-window 1)
-  (org-agenda-list)
+  (org-todo-list)
   (other-window 1)
   )
 
@@ -251,8 +265,8 @@ When optional fourth argument is non-nil, treat the from as a regular expression
 (global-set-key (kbd "C-c o") 'occur)
 (global-set-key (kbd "C-o") 'other-frame)
 
-(global-set-key (kbd "C-x v s") 'egg-status)
-(global-set-key (kbd "C-x v l") 'egg-log)
+(global-set-key (kbd "C-x O") 'previous-multiframe-window)
+(global-set-key (kbd "C-x M-1") 'make-frame)
 
 (defun uniquify-region-lines (beg end)
     "Remove duplicate adjacent lines in region."
@@ -296,17 +310,27 @@ end tell")
   )
 
 (add-hook 'js-mode-hook (lambda () (local-set-key (kbd "\C-c\C-c") 'make-and-run-js)))
+(add-to-list 'auto-mode-alist '("\\.ecs$" . js-mode))
+
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 
 ;; ======= Pomodoro =======
 
 (require 'pomodoro)
 
+(defun pomodoro-apple-display (msg) 
+  (do-applescript (format "display notification \"%s\"" msg))
+)
+
+(add-hook 'pomodoro-message-hook 'pomodoro-apple-display)
+
 ;; ======= Marmalade =======
 
 (require 'package)
 (add-to-list 'package-archives 
-    '("marmalade" .
-      "http://marmalade-repo.org/packages/"))
+             '("marmalade" . "http://marmalade-repo.org/packages/"))
+(add-to-list 'package-archives
+             '("melpa" . "https://melpa.org/packages/"))
 (package-initialize)
 
 ;; ======= JS flymake =======
@@ -314,8 +338,19 @@ end tell")
 
 ;; ======= Eshell customization =======
 
-;; (setq eshell-path-env (concat "/usr/local/bin" ":" eshell-path-env))
+(defun eshell-mode-hook-func ()
+  (setq eshell-path-env (concat "/usr/local/bin:" eshell-path-env))
+  (setenv "PATH" (concat "/usr/local/bin:" (getenv "PATH"))))
 
+(add-hook 'eshell-mode-hook 'eshell-mode-hook-func)
+
+(require 'exec-path-from-shell)
+(exec-path-from-shell-initialize)
+
+(setenv "PAGER" "cat")
+(setenv "EDITOR" "emacsclient")
+
+(eshell)
 
 ;; ======= LUA Mode =======
 
@@ -327,7 +362,115 @@ end tell")
 
 (server-start)
 
-;; ======= VC support =======
+;; ======= Dired-X mode =======
 
-(add-to-list 'load-path "~/elisp/egg")
-(require 'egg)
+(require 'dired-x)
+(setq-default dired-omit-files-p t) ; Buffer-local variable
+
+;; ======= Article Note =======
+
+(defun article-note ()
+  (interactive)
+  (let ((month (format-time-string "%Y%m"))) 
+    (find-file (format "~/Desktop/whynotgame_google/blog/notes/articleNotes%s.html" month))
+    )
+  (end-of-buffer)
+  (insert "note")
+  (yas-expand)
+  (yank)
+)
+
+;; ======= Magit =======
+
+(global-set-key (kbd "C-x g") 'magit-status)
+
+;; ======= HTML Mode =======
+
+(defun add-new-html-li-line ()
+  (interactive)
+  (electric-newline-and-maybe-indent)
+  (indent-for-tab-command)
+  (insert "<li></li>")
+  (backward-char 5)
+)
+(add-hook 'html-mode-hook (lambda () (local-set-key (kbd "M-RET") 'add-new-html-li-line)))
+
+(defun open-current-html-page ()
+  (interactive)
+  (do-applescript
+   (format "set site to \"file://%s\"
+tell application \"Google Chrome\"
+    activate
+    tell window 1
+        set URL of active tab to site
+    end tell
+end tell" (file-truename (buffer-file-name)))))
+
+
+(add-hook 'html-mode-hook (lambda () (local-set-key (kbd "\C-c\C-c") 'open-current-html-page)))
+
+;; ======= Rainbow Delimiters =======
+
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(rainbow-delimiters-depth-1-face ((t (:foreground "dark red"))))
+ '(rainbow-delimiters-depth-2-face ((t (:foreground "DarkOrange2"))))
+ '(rainbow-delimiters-depth-3-face ((t (:foreground "gold2"))))
+ '(rainbow-delimiters-depth-4-face ((t (:foreground "green2"))))
+ '(rainbow-delimiters-depth-5-face ((t (:foreground "DeepSkyBlue2"))))
+ '(rainbow-delimiters-depth-6-face ((t (:foreground "DarkOrchid2"))))
+ '(rainbow-delimiters-depth-7-face ((t (:foreground "VioletRed2")))))
+
+;; ======= Ivy Mode =======
+
+(setq ivy-use-virtual-buffers t)
+(setq ivy-count-format "(%d/%d) ")
+
+(ivy-mode 1)
+
+;; ======= Back-up files =======
+
+(setq
+   backup-by-copying t 
+   backup-directory-alist
+    '(("." . "~/.saves"))
+   delete-old-versions t
+   kept-new-versions 6
+   kept-old-versions 2)
+
+;; ======= Projectile Mode =======
+
+(projectile-mode)
+
+;; ======= Projector Size =======
+
+(defun projector-size ()
+  (interactive)
+  (set-face-attribute 'default nil :height 100)
+  )
+
+;; ======= Synonyms =======
+
+(setq synonyms-file "~/elisp/mthesaur.txt")
+(setq synonyms-cache-file "~/elisp/mthesaur.txt.cache")
+(require 'synonyms)
+
+;; ======= Multiple Cursors =======
+
+(add-to-list 'load-path "~/elisp/multiple-cursors")
+(require 'multiple-cursors)
+
+(global-set-key (kbd "C-c m c") 'mc/edit-lines)
+
+;; ======= Deadgrep =======
+
+(add-to-list 'load-path "~/elisp/spinner")
+(require 'deadgrep)
+
+(setq deadgrep-project-root-function (lambda () "~/Desktop/syph/"))
+(global-set-key (kbd "C-c C-r") 'deadgrep)
