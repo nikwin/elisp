@@ -1,0 +1,12 @@
+** TODO Publicity + emails /1E
+   DEADLINE: <`(format-time-string "%Y-%m-%d %a" (current-time))`>
+** TODO Publicity + emails /1E
+   DEADLINE: <`(format-time-string "%Y-%m-%d %a" (time-add (current-time) (seconds-to-time (* 24 3600))))`>
+** TODO Publicity + emails /1E
+   DEADLINE: <`(format-time-string "%Y-%m-%d %a" (time-add (current-time) (seconds-to-time (* 24 3600 2))))`>
+** TODO Turn Based Thursday /1E
+   DEADLINE: <`(format-time-string "%Y-%m-%d %a" (time-add (current-time) (seconds-to-time (* 24 3600 3))))`>
+** TODO Publicity + emails /1E
+   DEADLINE: <`(format-time-string "%Y-%m-%d %a" (time-add (current-time) (seconds-to-time (* 24 3600 4))))`>
+** TODO Screenshot Saturday /1E
+   DEADLINE: <`(format-time-string "%Y-%m-%d %a" (time-add (current-time) (seconds-to-time (* 24 3600 5))))`>

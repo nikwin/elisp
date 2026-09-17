@@ -1,0 +1,5 @@
+--- ~turnUpdateComponent
+
+turnUpdate: function(entity, world){
+    $0
+};

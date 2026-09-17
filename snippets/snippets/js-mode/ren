@@ -1,0 +1,6 @@
+--- ~renderComponent
+
+priority: $1
+render: function(rect, entity, world){
+    $0
+};

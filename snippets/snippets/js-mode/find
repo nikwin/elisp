@@ -1,0 +1,1 @@
+_.find(${1:world.entitiesForPlayer(entity)}, worldEntity => (worldEntity.$0))

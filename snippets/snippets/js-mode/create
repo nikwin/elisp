@@ -1,0 +1,5 @@
+--- ~createExecutable
+
+execute: function(entity, world){
+    $0
+};

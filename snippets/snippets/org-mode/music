@@ -1,0 +1,5 @@
+*** TODO Notes on $1 /2E
+    DEADLINE: <`(format-time-string "%Y-%m-%d %a" (time-add (current-time) (seconds-to-time (* 24 3600 6))))`>
+*** TODO Article on $1 /4E
+    DEADLINE: <`(format-time-string "%Y-%m-%d %a" (time-add (current-time) (seconds-to-time (* 24 3600 6))))`>
+$0

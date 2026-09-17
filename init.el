@@ -1,7 +1,7 @@
 ;; ======= Basic initializations =======
 
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
+(menu-bar-mode -1)
+;(scroll-bar-mode -1)
 
 (add-to-list 'load-path "~/elisp")
 
@@ -24,7 +24,7 @@
 
 ;; ======= Spell checks =======
 
-(setq ispell-program-name "/opt/local/bin/aspell")
+(setq ispell-program-name "aspell")
 
 (add-hook 'c++-mode-hook (lambda () (flyspell-prog-mode)))
 (add-hook 'js-mode-hook (lambda () (flyspell-prog-mode)))
@@ -45,6 +45,16 @@
 (global-set-key (kbd "\C-c b") 'org-iswitchb)
 
 (add-hook 'org-mode-hook (lambda () (flyspell-mode 1)))
+
+(fset 'set-sun
+   (kmacro-lambda-form [?\C-c ?\C-d ?f ?r ?i ?\C-m] 0 "%d"))
+
+(add-hook 'org-mode-hook (lambda ()  (local-set-key (kbd "\C-c s") 'set-sun)))
+
+(fset 'complete-today
+   (kmacro-lambda-form [?\C-c ?\C-t ?\C-c ?\C-d ?+ ?0 ?\C-m] 0 "%d"))
+
+(global-set-key (kbd "\C-c k") 'complete-today)
 
 ;; ======= Insert a date =======
 
@@ -110,10 +120,12 @@
 (add-to-list 'auto-mode-alist '("\\.[Cc][Ss][Vv]\\'" . csv-mode))
 (add-to-list 'auto-mode-alist '("\\.bcsv$" . csv-mode))
 (add-to-list 'auto-mode-alist '("\\.gen_csv$" . csv-mode))
+(add-to-list 'auto-mode-alist '("\\.temp_csv$" . csv-mode))
 (add-to-list 'auto-mode-alist '("\\.archive_csv$" . csv-mode))
 (autoload 'csv-mode "csv-mode"
   "Major mode for editing comma-separated value files." t)
 (add-hook 'csv-mode-hook (lambda () (synosaurus-mode)))
+(add-hook 'csv-mode-hook (lambda () (csv-align-fields nil (point-min) (point-max))))
 
 ;; ======= Uniquify =======
 
@@ -208,8 +220,8 @@ When optional fourth argument is non-nil, treat the from as a regular expression
 
 (add-to-list 'load-path "~/elisp/yasnippet")
 (require 'yasnippet)
+(add-to-list 'yas-snippet-dirs "~/elisp/snippets/snippets")
 (yas/initialize)
-(yas/load-directory "~/elisp/yasnippet/snippets")
 (yas/global-mode 1)
 
 ;; ======= Undo-tree =======
@@ -301,15 +313,10 @@ When optional fourth argument is non-nil, treat the from as a regular expression
 (defun make-and-run-js ()
   (interactive)
   (compile "make -k")
-  (do-applescript "tell application \"Google Chrome\"
-    activate
-    tell the active tab of its first window
-        reload
-    end tell
-end tell")
   )
 
 (add-hook 'js-mode-hook (lambda () (local-set-key (kbd "\C-c\C-c") 'make-and-run-js)))
+(add-hook 'js-mode-hook (lambda () (local-set-key (kbd "\C-j") 'newline)))
 (add-to-list 'auto-mode-alist '("\\.ecs$" . js-mode))
 
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
@@ -318,20 +325,14 @@ end tell")
 
 (require 'pomodoro)
 
-(defun pomodoro-apple-display (msg) 
-  (do-applescript (format "display notification \"%s\"" msg))
-)
-
-(add-hook 'pomodoro-message-hook 'pomodoro-apple-display)
-
 ;; ======= Marmalade =======
 
 (require 'package)
-(add-to-list 'package-archives 
-             '("marmalade" . "http://marmalade-repo.org/packages/"))
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/"))
 (package-initialize)
+(add-to-list 'package-archives
+         '("melpa" . "http://melpa.org/packages/") t)
+(add-to-list 'package-archives
+         '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 
 ;; ======= JS flymake =======
 
@@ -367,21 +368,9 @@ end tell")
 (require 'dired-x)
 (setq-default dired-omit-files-p t) ; Buffer-local variable
 
-;; ======= Article Note =======
-
-(defun article-note ()
-  (interactive)
-  (let ((month (format-time-string "%Y%m"))) 
-    (find-file (format "~/Desktop/whynotgame_google/blog/notes/articleNotes%s.html" month))
-    )
-  (end-of-buffer)
-  (insert "note")
-  (yas-expand)
-  (yank)
-)
-
 ;; ======= Magit =======
 
+(require 'transient)
 (global-set-key (kbd "C-x g") 'magit-status)
 
 ;; ======= HTML Mode =======
@@ -428,6 +417,9 @@ end tell" (file-truename (buffer-file-name)))))
 
 ;; ======= Ivy Mode =======
 
+(add-to-list 'load-path "~/elisp/swiper")
+(require 'ivy)
+
 (setq ivy-use-virtual-buffers t)
 (setq ivy-count-format "(%d/%d) ")
 
@@ -445,7 +437,11 @@ end tell" (file-truename (buffer-file-name)))))
 
 ;; ======= Projectile Mode =======
 
+(add-to-list 'load-path "~/elisp/projectile")
+(require 'projectile)
 (projectile-mode)
+
+(global-set-key (kbd "C-c p") 'projectile--find-file)
 
 ;; ======= Projector Size =======
 
@@ -454,12 +450,6 @@ end tell" (file-truename (buffer-file-name)))))
   (set-face-attribute 'default nil :height 100)
   )
 
-;; ======= Synonyms =======
-
-(setq synonyms-file "~/elisp/mthesaur.txt")
-(setq synonyms-cache-file "~/elisp/mthesaur.txt.cache")
-(require 'synonyms)
-
 ;; ======= Multiple Cursors =======
 
 (add-to-list 'load-path "~/elisp/multiple-cursors")
@@ -467,10 +457,44 @@ end tell" (file-truename (buffer-file-name)))))
 
 (global-set-key (kbd "C-c m c") 'mc/edit-lines)
 
-;; ======= Deadgrep =======
+;; ======= Quick grep =======
 
-(add-to-list 'load-path "~/elisp/spinner")
-(require 'deadgrep)
+(fset 'quickGrep
+   (kmacro-lambda-form [?\C-\[ ?x ?r ?g ?r ?e ?p ?\C-m ?\C-m ?* ?. ?* ?\C-\[ ?\C-j ?\C-m] 0 "%d"))
 
-(setq deadgrep-project-root-function (lambda () "~/Desktop/syph/"))
-(global-set-key (kbd "C-c C-r") 'deadgrep)
+(global-set-key (kbd "C-c C-q") 'quickGrep)
+
+;; ======= Cygwin Customization =======
+
+(defun cleanString (str) 
+  (replace-regexp-in-string 
+   "" "" 
+   (replace-regexp-in-string 
+    " " "" 
+    (replace-regexp-in-string
+     "—" "-"
+     (replace-regexp-in-string
+      "”" "\""
+      (replace-regexp-in-string
+       "“" "\""
+       (replace-regexp-in-string
+        "’" "'" 
+        (replace-regexp-in-string
+         "‘" "'"
+         str))))))))
+
+(defun gclip ()
+  "Get clipboard content."
+  (interactive)
+  (insert 
+   (cleanString 
+    (with-output-to-string
+      (with-current-buffer standard-output
+        (call-process "getclip" nil t nil))))))
+
+(defun pclip ()
+  "Copy STR-VAL into clipboard."
+  (interactive)
+  (with-temp-buffer
+    (yank)
+    (call-process-region (point-min) (point-max) "putclip")))

@@ -1,0 +1,11 @@
+* Week of `(format-time-string "%Y-%m-%d")`
+** TODO Plot out week /4T
+   DEADLINE: <`(format-time-string "%Y-%m-%d %a")`> 
+   - Try for 72 pomodoros
+** TODO Wrap-up blog post /4T 
+   DEADLINE: <`(format-time-string "%Y-%m-%d %a" (time-add (current-time) (seconds-to-time (* 24 3600 4))))`> 
+   - Put hashtags on your weekly updates.
+** TODO Great Thoughts /6D 
+   DEADLINE: <`(format-time-string "%Y-%m-%d %a" (time-add (current-time) (seconds-to-time (* 24 3600 6))))`>
+** TODO Writing /6T
+   DEADLINE: <`(format-time-string "%Y-%m-%d %a" (time-add (current-time) (seconds-to-time (* 24 3600 6))))`>

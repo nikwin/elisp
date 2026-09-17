@@ -1,0 +1,1 @@
+_.filter(${1:world.entitiesForPlayer(entity)}, ${2:worldEntity} => ($2.$0))

@@ -1,0 +1,11 @@
+*** TODO Brainstorm $1 /${2:1}D
+    DEADLINE: <`(format-time-string "%Y-%m-%d %a" (time-add (current-time) (seconds-to-time (* 24 3600 6))))`> 
+*** TODO Design $1 /${3:3}D
+    DEADLINE: <`(format-time-string "%Y-%m-%d %a" (time-add (current-time) (seconds-to-time (* 24 3600 6))))`> 
+*** TODO Implement $1 /${4:4}D [/]
+    DEADLINE: <`(format-time-string "%Y-%m-%d %a" (time-add (current-time) (seconds-to-time (* 24 3600 6))))`> 
+*** TODO Test $1 /${5:2}T
+    DEADLINE: <`(format-time-string "%Y-%m-%d %a" (time-add (current-time) (seconds-to-time (* 24 3600 6))))`>
+*** TODO Write about $1 /${6:1}T
+    DEADLINE: <`(format-time-string "%Y-%m-%d %a" (time-add (current-time) (seconds-to-time (* 24 3600 6))))`>
+$0

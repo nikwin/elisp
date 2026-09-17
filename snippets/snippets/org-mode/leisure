@@ -1,0 +1,57 @@
+* TODO [#A] Leisure `(format-time-string "%Y-%m-%d")` [/]
+  DEADLINE: <`(format-time-string "%Y-%m-%d %a" (time-add (current-time) (seconds-to-time (* 24 3600 6))))`> 
+** TODO $1 Notes /2E
+   DEADLINE: <`(format-time-string "%Y-%m-%d %a" (time-add (current-time) (seconds-to-time (* 24 3600 6))))`> 
+** TODO $1 review /4E
+   DEADLINE: <`(format-time-string "%Y-%m-%d %a" (time-add (current-time) (seconds-to-time (* 24 3600 6))))`>
+** TODO ${2:Gaming} /2E
+   DEADLINE: <`(format-time-string "%Y-%m-%d %a" (time-add (current-time) (seconds-to-time (* 24 3600 6))))`>
+** TODO $2 /2E
+   DEADLINE: <`(format-time-string "%Y-%m-%d %a" (time-add (current-time) (seconds-to-time (* 24 3600 6))))`>
+** TODO ${3:Gaming} /2E
+   DEADLINE: <`(format-time-string "%Y-%m-%d %a" (time-add (current-time) (seconds-to-time (* 24 3600 6))))`>
+** TODO $3 /2E
+   DEADLINE: <`(format-time-string "%Y-%m-%d %a" (time-add (current-time) (seconds-to-time (* 24 3600 6))))`>
+** TODO Meditate /1L
+   DEADLINE: <`(format-time-string "%Y-%m-%d %a" (time-add (current-time) (seconds-to-time (* 24 3600 6))))`>
+** TODO Meditate /1L
+   DEADLINE: <`(format-time-string "%Y-%m-%d %a" (time-add (current-time) (seconds-to-time (* 24 3600 6))))`>
+** TODO Skips /1L
+   DEADLINE: <`(format-time-string "%Y-%m-%d %a" (time-add (current-time) (seconds-to-time (* 24 3600 6))))`>
+** TODO Skips /1L
+   DEADLINE: <`(format-time-string "%Y-%m-%d %a" (time-add (current-time) (seconds-to-time (* 24 3600 6))))`>
+** TODO Planks /1L
+   DEADLINE: <`(format-time-string "%Y-%m-%d %a" (time-add (current-time) (seconds-to-time (* 24 3600 6))))`>
+** TODO Planks /1L
+   DEADLINE: <`(format-time-string "%Y-%m-%d %a" (time-add (current-time) (seconds-to-time (* 24 3600 6))))`>
+** TODO ${4:Movie} /4L
+   DEADLINE: <`(format-time-string "%Y-%m-%d %a" (time-add (current-time) (seconds-to-time (* 24 3600 6))))`>
+** TODO ${6:TV} /2L
+   DEADLINE: <`(format-time-string "%Y-%m-%d %a" (time-add (current-time) (seconds-to-time (* 24 3600 6))))`>
+** TODO $6 /2L
+   DEADLINE: <`(format-time-string "%Y-%m-%d %a" (time-add (current-time) (seconds-to-time (* 24 3600 6))))`>
+** TODO ${7:TV} /2L
+   DEADLINE: <`(format-time-string "%Y-%m-%d %a" (time-add (current-time) (seconds-to-time (* 24 3600 6))))`>
+** TODO $7 /2L
+   DEADLINE: <`(format-time-string "%Y-%m-%d %a" (time-add (current-time) (seconds-to-time (* 24 3600 6))))`>
+** TODO ${8:Reading} /1L
+   DEADLINE: <`(format-time-string "%Y-%m-%d %a" (time-add (current-time) (seconds-to-time (* 24 3600 6))))`>
+** TODO $8 /1L
+   DEADLINE: <`(format-time-string "%Y-%m-%d %a" (time-add (current-time) (seconds-to-time (* 24 3600 6))))`>
+** TODO $8 /1L
+   DEADLINE: <`(format-time-string "%Y-%m-%d %a" (time-add (current-time) (seconds-to-time (* 24 3600 6))))`>
+** TODO $8 /1L
+   DEADLINE: <`(format-time-string "%Y-%m-%d %a" (time-add (current-time) (seconds-to-time (* 24 3600 6))))`>
+** TODO ${9:Cooking} /2L
+   DEADLINE: <`(format-time-string "%Y-%m-%d %a" (time-add (current-time) (seconds-to-time (* 24 3600 6))))`>
+** TODO ${10:Expedition} /2L
+   DEADLINE: <`(format-time-string "%Y-%m-%d %a" (time-add (current-time) (seconds-to-time (* 24 3600 6))))`>
+** TODO ${11:Expedition} /4L
+   DEADLINE: <`(format-time-string "%Y-%m-%d %a" (time-add (current-time) (seconds-to-time (* 24 3600 6))))`>
+** TODO ${12:Podcast} /2L
+   DEADLINE: <`(format-time-string "%Y-%m-%d %a" (time-add (current-time) (seconds-to-time (* 24 3600 6))))`>
+** TODO ${13:Podcast} /2L
+   DEADLINE: <`(format-time-string "%Y-%m-%d %a" (time-add (current-time) (seconds-to-time (* 24 3600 6))))`>
+** TODO ${14:Podcast} /2L
+   DEADLINE: <`(format-time-string "%Y-%m-%d %a" (time-add (current-time) (seconds-to-time (* 24 3600 6))))`>
+$0

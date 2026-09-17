@@ -1,0 +1,1 @@
+var $1 = _.find(world.entitiesForPlayer(${2:entity}), worldEntity => worldEntity.$1Component);$0
